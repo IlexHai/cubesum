@@ -1,0 +1,64 @@
+---
+title: "CubeSum_vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CubeSum_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(cubesum)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Introduction
+
+The cubesum package includes a function for computing the sums of cubes from 1
+
+to a positive integer n.
+$$1^3+2^3+\cdots+n^3$$
+The computation is implemented in C++, and runs faster than the base R function.
+
+The function is
+```{r}
+CubeSum
+```
+which returns the sum of cubes from 1 to n
+
+Usage Example
+
+```{r}
+CubeSum(10)
+```
+
+It will return $1^3+2^3+\cdots+10^3=3025$
+
+```{r}
+#check for correctness
+CubeSum_R <-function(n){
+  sum((1:n)^3)
+}
+
+all.equal(CubeSum_R(100), CubeSum(100))
+```
+
+```{r}
+#check for efficiency with pure R
+library(bench)
+bench::mark(
+  R = CubeSum_R(10000000),
+  Rcpp = CubeSum(10000000)
+)
+```
+
