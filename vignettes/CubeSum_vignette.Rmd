@@ -53,7 +53,7 @@ CubeSum_R <-function(n){
 all.equal(CubeSum_R(100), CubeSum(100))
 ```
 
-```{r}
+```{r, eval = FALSE}
 #check for efficiency with pure R
 library(bench)
 bench::mark(
